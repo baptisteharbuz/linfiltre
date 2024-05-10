@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, View, Text, StyleSheet } from 'react-native';
+import { ScrollView, Text, StyleSheet } from 'react-native';
 
 const GameRulesScreen = () => {
     return (
@@ -13,10 +13,10 @@ const GameRulesScreen = () => {
 
             <Text style={styles.heading}>Préparation</Text>
             <Text style={styles.text}>
-                <Text style={styles.bold}>Maître du Jeu :</Text> Une personne est désignée comme Maître du Jeu (MJ). Le MJ n'est pas un joueur et gère le déroulement de la partie.
+                <Text style={styles.bold}>Sélection des joueurs :</Text> Selection du nombre de joueur et de leur nom.
             </Text>
             <Text style={styles.text}>
-                <Text style={styles.bold}>Sélection des joueurs :</Text> Le MJ note le nombre de joueurs et leur nom.
+                <Text style={styles.bold}>Maître du Jeu :</Text> Une personne est désignée comme Maître du Jeu (MJ) de façon aléatoire ou par vote entre les joueurs. Le MJ n'est pas un joueur et gère le déroulement de la partie. Il pourra participer au vote pour aider les villageois à identifier l'infiltré.
             </Text>
             <Text style={styles.text}>
                 <Text style={styles.bold}>Choix du mot secret :</Text> Le MJ choisit un mot secret, soit de manière aléatoire, soit en sélectionnant un mot spécifique.
@@ -37,7 +37,7 @@ const GameRulesScreen = () => {
                 <Text style={styles.bold}>Découverte du mot secret :</Text> Si les joueurs découvrent le mot secret avant la fin du temps imparti, ils passent à la phase de vote. Sinon, les joueurs perdent la partie.
             </Text>
             <Text style={styles.text}>
-                <Text style={styles.bold}>Vote pour identifier l'Infiltré :</Text> Après la découverte du mot, tous les Villageois discutent pour décider qui parmi eux est l'Infiltré. Un vote est organisé. Si l'Infiltré est correctement identifié, les Villageois gagnent la partie. Si l'Infiltré n'est pas identifié, ou si le mauvais joueur est accusé, l'Infiltré gagne.
+                <Text style={styles.bold}>Vote pour identifier l'Infiltré :</Text> Après la découverte du mot, tous les Villageois ainsi que le MJ discutent pour décider qui parmi eux est l'Infiltré. Un vote est organisé. Si l'Infiltré est correctement identifié, les Villageois gagnent la partie. Si l'Infiltré n'est pas identifié, ou si le mauvais joueur est accusé, l'Infiltré gagne.
             </Text>
 
             <Text style={styles.heading}>Remarques</Text>
