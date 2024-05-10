@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
+import button from '../Styles/Button'
+import style from '../Styles/Style'
+import text from '../Styles/Text'
+import input from '../Styles/Input'
 
 const SecretWordEntryScreen = ({ navigation, route }) => {
     const [secretWord, setSecretWord] = useState('');
@@ -37,10 +41,10 @@ const SecretWordEntryScreen = ({ navigation, route }) => {
     };
 
     return (
-        <View style={styles.container}>
-            <Text style={styles.title}>Entrez le mot à faire deviner</Text>
+        <View style={style.containerCenter}>
+            <Text style={text.title}>Entrez le mot à faire deviner</Text>
             <TextInput
-                style={styles.input}
+                style={input.input}
                 value={secretWord}
                 onChangeText={setSecretWord}
                 placeholder="Votre mot"
@@ -48,32 +52,22 @@ const SecretWordEntryScreen = ({ navigation, route }) => {
                 autoCorrect={false}
                 returnKeyType="done"
             />
-            <Button title="Mot aléatoire" onPress={fetchRandomWord} />
-            <Button title="Suivant" onPress={handleSecretWordSubmit} />
+            <View style={button.buttonContainer}>
+                <TouchableOpacity
+                    style={button.button}
+                    onPress={fetchRandomWord}
+                >
+                    <Text style={button.buttonText}>Mot aléatoire</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    style={button.button}
+                    onPress={handleSecretWordSubmit}
+                >
+                    <Text style={button.buttonText}>Suivant</Text>
+                </TouchableOpacity>
+            </View>
         </View>
     );
 };
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        padding: 20,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#fff',
-    },
-    title: {
-        fontSize: 24,
-        marginBottom: 20,
-    },
-    input: {
-        width: '80%',
-        marginBottom: 20,
-        padding: 10,
-        borderWidth: 1,
-        borderColor: '#ccc',
-        borderRadius: 5,
-    }
-});
 
 export default SecretWordEntryScreen;

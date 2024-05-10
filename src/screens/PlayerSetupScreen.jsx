@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, TextInput, Button, TouchableOpacity, ScrollView } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-// import { AsyncStorage } from 'react-native';
+import button from '../Styles/Button'
+import style from '../Styles/Style'
+import text from '../Styles/Text'
+import input from '../Styles/Input'
 
 const PlayerSetupScreen = ({ navigation }) => {
     const [numberOfPlayers, setNumberOfPlayers] = useState(2);
@@ -49,53 +52,42 @@ const PlayerSetupScreen = ({ navigation }) => {
     };
 
     return (
-        <ScrollView contentContainerStyle={styles.container}>
-            <Text style={styles.title}>Joueurs</Text>
-            <View style={styles.playerNumberContainer}>
-                <Button title="-" onPress={decrementPlayers} />
-                <Text style={styles.playerNumberText}>{numberOfPlayers}</Text>
-                <Button title="+" onPress={incrementPlayers} />
+        <ScrollView contentContainerStyle={style.containerPlayerSetup}>
+            <Text style={text.title}>Joueurs</Text>
+            <View style={button.playerNumberContainer}>
+                <TouchableOpacity
+                    style={button.button}
+                    onPress={decrementPlayers}
+                >
+                    <Text style={button.buttonText}>-</Text>
+                </TouchableOpacity>
+                <Text style={button.playerNumberText}>{numberOfPlayers}</Text>
+                <TouchableOpacity
+                    style={button.button}
+                    onPress={incrementPlayers}
+                >
+                    <Text style={button.buttonText}>+</Text>
+                </TouchableOpacity>
             </View>
             {Array.from({ length: numberOfPlayers }, (_, index) => (
                 <TextInput
                     key={index}
-                    style={styles.input}
+                    style={input.input}
                     value={playerNames[index]}
                     onChangeText={text => handlePlayerNameChange(index, text)}
                     placeholder={`Joueur ${index + 1} Nom`}
                 />
             ))}
-            <Button title="Suivant" onPress={handleSubmit} />
+            <View style={button.buttonContainer}>
+                <TouchableOpacity
+                    style={button.button}
+                    onPress={handleSubmit}
+                >
+                    <Text style={button.buttonText}>Suivant</Text>
+                </TouchableOpacity>
+            </View>
         </ScrollView>
     );
 };
-
-const styles = StyleSheet.create({
-    container: {
-        padding: 20,
-        alignItems: 'center',
-    },
-    title: {
-        fontSize: 24,
-        marginBottom: 20,
-    },
-    input: {
-        width: '100%',
-        marginBottom: 10,
-        padding: 10,
-        borderWidth: 1,
-        borderColor: '#ccc',
-        borderRadius: 5,
-    },
-    playerNumberContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginBottom: 20,
-    },
-    playerNumberText: {
-        marginHorizontal: 20,
-        fontSize: 18,
-    },
-});
 
 export default PlayerSetupScreen;

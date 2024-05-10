@@ -1,20 +1,26 @@
-import React, { useState, useRef } from 'react';
-import { View, Text, Button } from 'react-native';
+import React, { useState, useRef, useEffect } from 'react';
+import { View, Text, TouchableOpacity, Alert } from 'react-native';
 import LottieView from 'lottie-react-native';
+import button from '../Styles/Button';
+import style from '../Styles/Style';
+import text from '../Styles/Text';
 
 const GameCountdown = ({ navigation }) => {
-    const [seconds, setSeconds] = useState(180); // 3 minutes = 180 seconds
+    const [seconds, setSeconds] = useState(180);
     const [timerActive, setTimerActive] = useState(false);
     const [intervalId, setIntervalId] = useState(null);
     const animationRef = useRef(null);
 
+    useEffect(() => {
+        if (seconds === 0) {
+            endGame();
+        }
+    }, [seconds]);
+
     const startTimer = () => {
-        if (!timerActive) {
+        if (!timerActive && seconds > 0) {
             const interval = setInterval(() => {
-                setSeconds(s => {
-                    if (s === 1) clearInterval(interval);
-                    return s - 1;
-                });
+                setSeconds(s => s - 1);
             }, 1000);
             setIntervalId(interval);
             setTimerActive(true);
@@ -31,6 +37,18 @@ const GameCountdown = ({ navigation }) => {
         }
     };
 
+    const endGame = () => {
+        clearInterval(intervalId);
+        setTimerActive(false);
+        animationRef.current.pause();
+        // Option 1: Afficher un message d'alerte
+        Alert.alert("Temps écoulé", "Le temps est écoulé, les villageois ont perdu", [
+            { text: "OK", onPress: () => navigation.navigate('Home') }
+        ]);
+        // Option 2: Naviguer vers une nouvelle page
+        // navigation.navigate('GameOver', { message: "Le temps est écoulé, les villageois ont perdu" });
+    };
+
     const formatTime = (totalSeconds) => {
         const minutes = Math.floor(totalSeconds / 60);
         const seconds = totalSeconds % 60;
@@ -38,16 +56,29 @@ const GameCountdown = ({ navigation }) => {
     };
 
     return (
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-            <Text>Temps restant : {formatTime(seconds)}</Text>
-            <Button title={timerActive ? "Pause" : "Démarrer le jeu"} onPress={timerActive ? pauseTimer : startTimer} />
-            <Button title="Vote" onPress={() => navigation.navigate('Vote')} />
+        <View style={style.containerCenter}>
+            <Text style={text.text}>Temps restant :</Text>
+            <Text style={text.title}>{formatTime(seconds)}</Text>
+            <View style={button.buttonContainer}>
+                <TouchableOpacity
+                    style={button.button}
+                    onPress={timerActive ? pauseTimer : startTimer}
+                >
+                    <Text style={button.buttonText}>{timerActive ? "Pause" : "Démarrer le jeu"}</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    style={button.button}
+                    onPress={() => navigation.navigate('Vote')}
+                >
+                    <Text style={button.buttonText}>Vote</Text>
+                </TouchableOpacity>
+            </View>
             <LottieView
                 ref={animationRef}
                 source={require('../../assets/Animations/Timer.json')}
                 autoPlay={false}
                 loop
-                style={{ width: 100, height: 100 }}
+                style={{ width: 200, height: 200 }}
             />
         </View>
     );

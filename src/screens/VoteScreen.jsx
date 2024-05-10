@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Button, ScrollView } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import button from '../Styles/Button'
+import style from '../Styles/Style'
+import text from '../Styles/Text'
 
 const VoteScreen = ({ navigation }) => {
     const [players, setPlayers] = useState([]);
@@ -26,16 +29,27 @@ const VoteScreen = ({ navigation }) => {
     };
 
     return (
-        <ScrollView contentContainerStyle={{ alignItems: 'center', justifyContent: 'center' }}>
+        <ScrollView contentContainerStyle={style.containerCenter}>
+            <Text style={text.title}>Qui est l'infiltré ?</Text>
             {players.map((player, index) => (
                 <View key={index} style={{ margin: 10 }}>
-                    <Button title={player.name} onPress={() => onVote(player)} />
+                    <TouchableOpacity
+                        style={button.button}
+                        onPress={() => onVote(player)}
+                    >
+                        <Text style={button.buttonText}>{player.name}</Text>
+                    </TouchableOpacity>
                 </View>
             ))}
             {selectedPlayer && (
                 <View style={{ marginTop: 20 }}>
-                    <Text>Vous avez sélectionné: {selectedPlayer.name}</Text>
-                    <Button title="Confirmer le vote" onPress={confirmVote} />
+                    <Text style={text.text}>Vous avez sélectionné: <Text style={text.bold}>{selectedPlayer.name}</Text></Text>
+                    <TouchableOpacity
+                        style={button.button}
+                        onPress={confirmVote}
+                    >
+                        <Text style={button.buttonText}>Confirmer le vote</Text>
+                    </TouchableOpacity>
                 </View>
             )}
         </ScrollView>

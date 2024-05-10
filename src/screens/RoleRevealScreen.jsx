@@ -1,6 +1,9 @@
 import React from 'react';
-import { View, Text, Button } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import button from '../Styles/Button'
+import style from '../Styles/Style'
+import text from '../Styles/Text'
 
 const RoleRevealScreen = ({ navigation, route }) => {
     const [players, setPlayers] = React.useState([]);
@@ -36,10 +39,21 @@ const RoleRevealScreen = ({ navigation, route }) => {
 
 
     return (
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-            <Text>{players[currentIndex]?.name}, ton rôle est : {role}</Text>
-            {role === "l'infiltré" && <Text>Le mot secret est : {secretWord}</Text>}
-            <Button title="Suivant" onPress={handleNext} />
+        <View style={style.containerCenter}>
+            <Text style={text.title}>{players[currentIndex]?.name}</Text>
+            <Text style={text.text}>Tu es <Text style={text.bold}>{role}</Text></Text>
+            {role === "l'infiltré" && (
+                <>
+                    <Text>Le mot secret est :</Text>
+                    <Text style={text.secret}>{secretWord}</Text>
+                </>
+            )}
+            <TouchableOpacity
+                style={button.button}
+                onPress={handleNext}
+            >
+                <Text style={button.buttonText}>Suivant</Text>
+            </TouchableOpacity>
         </View>
     );
 };

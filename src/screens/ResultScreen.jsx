@@ -1,16 +1,27 @@
 import React from 'react';
-import { View, Text, Button } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
+import button from '../Styles/Button';
+import style from '../Styles/Style';
+import text from '../Styles/Text';
 
 const ResultScreen = ({ route, navigation }) => {
     const { isInfiltrator, playerName } = route.params;
-    const message = isInfiltrator
-        ? `${playerName} est bien l'infiltré ! Les villageois ont gagné !`
-        : `${playerName} n'est pas l'infiltré, les villageois ont perdu !`;
 
     return (
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-            <Text>{message}</Text>
-            <Button title="Nouvelle partie" onPress={() => navigation.navigate('Home')} />
+        <View style={style.containerCenter}>
+            <Text style={text.title}>{playerName}</Text>
+            <Text style={text.text}>
+                {isInfiltrator ? "est bien l'infiltré !" : "n'est pas l'infiltré,"}
+            </Text>
+            <Text style={text.text}>
+                {isInfiltrator ? "Les villageois ont gagné !" : "les villageois ont perdu !"}
+            </Text>
+            <TouchableOpacity
+                style={button.button}
+                onPress={() => navigation.navigate('Home')}
+            >
+                <Text style={button.buttonText}>Nouvelle partie</Text>
+            </TouchableOpacity>
         </View>
     );
 };

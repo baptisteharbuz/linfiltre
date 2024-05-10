@@ -1,71 +1,35 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import button from '../Styles/Button'
+import style from '../Styles/Style'
+import text from '../Styles/Text'
 
 const HomeScreen = ({ navigation }) => {
     return (
-        <View style={styles.container}>
+        <View style={style.containerHome}>
             {/* Titre en haut */}
-            <View style={styles.titleContainer}>
-                <Text style={styles.title}>Trouvez l'Infiltré</Text>
+            <View style={text.titleContainer}>
+                <Text style={text.title}>Trouvez l'Infiltré</Text>
             </View>
 
-            <View style={styles.spacer} />
+            <View style={style.spacer} />
 
-            <View style={styles.buttonContainer}>
+            <View style={button.buttonContainer}>
                 <TouchableOpacity
-                    style={styles.button}
+                    style={button.button}
                     onPress={() => navigation.navigate('PlayerSetup')}
                 >
-                    <Text style={styles.buttonText}>Jouer</Text>
+                    <Text style={button.buttonText}>Jouer</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                    style={styles.button}
+                    style={button.button}
                     onPress={() => navigation.navigate('Rules')}
                 >
-                    <Text style={styles.buttonText}>Règles du Jeu</Text>
+                    <Text style={button.buttonText}>Règles du Jeu</Text>
                 </TouchableOpacity>
             </View>
         </View>
     );
 };
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        backgroundColor: '#f5f5f5'
-    },
-    titleContainer: {
-        marginTop: 200,
-        justifyContent: 'flex-start',
-        width: '100%',
-        alignItems: 'center',
-    },
-    title: {
-        fontSize: 30,
-        marginBottom: 20,
-        // fontWeight: 'bold',
-    },
-    spacer: {
-        flex: 1,
-    },
-    buttonContainer: {
-        marginBottom: 200,
-        width: '60%',
-    },
-    button: {
-        alignItems: 'center',
-        backgroundColor: '#0056B3',
-        padding: 10,
-        borderRadius: 5,
-        marginTop: 10,
-    },
-    buttonText: {
-        color: '#FFFFFF',
-        fontSize: 16,
-        // fontWeight: 'bold',
-    }
-});
 
 export default HomeScreen;
