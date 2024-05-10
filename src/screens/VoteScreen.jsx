@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import button from '../Styles/Button'
-import style from '../Styles/Style'
-import text from '../Styles/Text'
+import button from '../Styles/Button';
+import style from '../Styles/Style';
+import text from '../Styles/Text';
 
 const VoteScreen = ({ navigation }) => {
     const [players, setPlayers] = useState([]);
@@ -11,8 +11,16 @@ const VoteScreen = ({ navigation }) => {
 
     useEffect(() => {
         const fetchPlayers = async () => {
-            const storedPlayers = JSON.parse(await AsyncStorage.getItem('Villageois'));
-            setPlayers(storedPlayers);
+            try {
+                const storedPlayers = await AsyncStorage.getItem('players');
+                if (storedPlayers !== null) {
+                    const parsedPlayers = JSON.parse(storedPlayers);
+                    const nonMJPlayers = parsedPlayers.filter(player => player.role !== 'MJ');
+                    setPlayers(nonMJPlayers);
+                }
+            } catch (e) {
+                console.log("Erreur lors de la récupération des joueurs depuis AsyncStorage", e);
+            }
         };
 
         fetchPlayers();
@@ -24,7 +32,7 @@ const VoteScreen = ({ navigation }) => {
 
     const confirmVote = () => {
         if (selectedPlayer) {
-            navigation.navigate('Result', { isInfiltrator: selectedPlayer.role === "l'infiltré", playerName: selectedPlayer.name });
+            navigation.navigate('Result', { isInfiltrator: selectedPlayer.role === "Infiltré", playerName: selectedPlayer.name });
         }
     };
 
@@ -32,7 +40,7 @@ const VoteScreen = ({ navigation }) => {
         <ScrollView contentContainerStyle={style.containerCenter}>
             <Text style={text.title}>Qui est l'infiltré ?</Text>
             {players.map((player, index) => (
-                <View key={index} style={{ margin: 10 }}>
+                <View key={index} style={button.buttonContainer}>
                     <TouchableOpacity
                         style={button.button}
                         onPress={() => onVote(player)}
@@ -43,7 +51,7 @@ const VoteScreen = ({ navigation }) => {
             ))}
             {selectedPlayer && (
                 <View style={{ marginTop: 20 }}>
-                    <Text style={text.text}>Vous avez sélectionné: <Text style={text.bold}>{selectedPlayer.name}</Text></Text>
+                    <Text style={text.text}>Vous avez sélectionné : <Text style={text.bold}>{selectedPlayer.name}</Text></Text>
                     <TouchableOpacity
                         style={button.button}
                         onPress={confirmVote}

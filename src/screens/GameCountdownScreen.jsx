@@ -73,13 +73,16 @@ const GameCountdown = ({ navigation }) => {
                     <Text style={button.buttonText}>Vote</Text>
                 </TouchableOpacity>
             </View>
-            <LottieView
-                ref={animationRef}
-                source={require('../../assets/Animations/Timer.json')}
-                autoPlay={false}
-                loop
-                style={{ width: 200, height: 200 }}
-            />
+            <View style={style.timerContainer}>
+                <LottieView
+                    style={style.timer}
+                    ref={animationRef}
+                    source={require('../../assets/Animations/Timer.json')}
+                    autoPlay={false}
+                    loop
+                />
+            </View>
+
         </View>
     );
 };

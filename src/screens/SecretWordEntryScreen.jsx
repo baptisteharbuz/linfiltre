@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { View, Text, TextInput, TouchableOpacity, Alert } from 'react-native';
-import button from '../Styles/Button'
-import style from '../Styles/Style'
-import text from '../Styles/Text'
-import input from '../Styles/Input'
+import button from '../Styles/Button';
+import style from '../Styles/Style';
+import text from '../Styles/Text';
+import input from '../Styles/Input';
 
 const SecretWordEntryScreen = ({ navigation, route }) => {
     const [secretWord, setSecretWord] = useState('');
@@ -19,25 +19,23 @@ const SecretWordEntryScreen = ({ navigation, route }) => {
             const data = await response.json();
             if (data.length > 0 && data[0].name) {
                 setSecretWord(data[0].name);
-                console.log(data[0].name);
             } else {
                 throw new Error('Invalid data format');
             }
         } catch (error) {
-            Alert.alert('Error', 'Failed to fetch a random word: ' + error.message);
+            Alert.alert('Erreur lors de la récupération aléatoire du mot ' + error.toString());
         }
     };
 
-    const handleSecretWordSubmit = () => {
+    const handleSecretWordSubmit = async () => {
         if (secretWord.trim() === '') {
-            Alert.alert("Invalid Input", "Please enter a secret word.");
+            Alert.alert("Entrez un mot secret pour continuer");
             return;
         }
-        // Stocker le mot secret en utilisant AsyncStorage pour l'utiliser plus tard.
-        AsyncStorage.setItem('secretWord', secretWord);
+        await AsyncStorage.setItem('secretWord', secretWord);
 
-        // Naviguer vers PlayerFlow, en commençant par PlayerConfirmScreen avec le premier joueur
-        navigation.navigate('PlayerFlow', { screen: 'PlayerConfirm', params: { playerName: playerNames[0] } });
+        // Naviguer vers le premier joueur non MJ
+        navigation.navigate('PlayerFlow', { screen: 'PlayerConfirm', params: { playerName: playerNames[0].name, nextPlayerIndex: 0 } });
     };
 
     return (

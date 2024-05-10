@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import button from '../Styles/Button'
 import style from '../Styles/Style'
 import text from '../Styles/Text'
@@ -14,7 +14,7 @@ const HomeScreen = ({ navigation }) => {
 
             <View style={style.spacer} />
 
-            <View style={button.buttonContainer}>
+            <View style={[button.buttonContainer, { marginBottom: 200 }]}>
                 <TouchableOpacity
                     style={button.button}
                     onPress={() => navigation.navigate('PlayerSetup')}

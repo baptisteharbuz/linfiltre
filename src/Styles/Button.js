@@ -2,7 +2,6 @@ import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
     buttonContainer: {
-        marginBottom: 200,
         width: '60%',
     },
     button: {

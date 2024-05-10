@@ -5,7 +5,7 @@ import HomeScreen from './src/screens/HomeScreen';
 import RulesScreen from './src/screens/RulesScreen';
 import PlayerSetupScreen from './src/screens/PlayerSetupScreen';
 import SecretWordEntryScreen from './src/screens/SecretWordEntryScreen';
-import PlayerFlowNavigator from './src/screens/PlayerFlowNavigator';  // Importez PlayerFlowNavigator
+import PlayerFlowNavigator from './src/screens/PlayerFlowNavigator';
 import GameCountdown from './src/screens/GameCountdownScreen';
 import VoteScreen from './src/screens/VoteScreen';
 import ResultScreen from './src/screens/ResultScreen';
